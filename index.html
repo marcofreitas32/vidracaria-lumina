@@ -8,7 +8,7 @@
     name="description"
     content="Vidraçaria Lumina em Londrina-PR. Box temperado, espelhos sob medida, janelas e fachadas de vidro. Orçamento rápido pelo WhatsApp (15) 99795-7851."
   />
-  <meta name="theme-color" content="#0a1219" />
+  <meta name="theme-color" content="#f6f9fc" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,13 +24,14 @@
         extend: {
           colors: {
             night: {
-              DEFAULT: "#0a1219",
-              soft: "#111c27",
-              panel: "#172533",
-              line: "rgba(200,220,240,0.12)",
+              DEFAULT: "#f6f9fc",
+              soft: "#edf3f8",
+              panel: "#ffffff",
+              line: "rgba(10,18,25,0.10)",
             },
-            mist: "#d7e3ef",
-            mute: "#8aa0b5",
+            mist: "#0f1c28",
+            ink: "#0a1219",
+            mute: "#52687b",
             aqua: {
               DEFAULT: "#2ec4b6",
               soft: "#5ed9cd",
@@ -43,7 +44,7 @@
             body: ["DM Sans", "system-ui", "sans-serif"],
           },
           boxShadow: {
-            glass: "0 8px 32px rgba(0,0,0,0.28)",
+            glass: "0 8px 32px rgba(15,28,40,0.10)",
             aqua: "0 12px 40px rgba(46,196,182,0.28)",
           },
         },
@@ -53,7 +54,7 @@
 
   <style>
     :root {
-      --night: #0a1219;
+      --night: #f6f9fc;
       --aqua: #2ec4b6;
     }
 
@@ -62,7 +63,7 @@
     body {
       font-family: "DM Sans", system-ui, sans-serif;
       background: var(--night);
-      color: #d7e3ef;
+      color: #0f1c28;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -70,11 +71,11 @@
 
     /* Glass navbar */
     .nav-glass {
-      background: rgba(10, 18, 25, 0.55);
+      background: rgba(255, 255, 255, 0.78);
       backdrop-filter: blur(18px) saturate(1.35);
       -webkit-backdrop-filter: blur(18px) saturate(1.35);
-      border: 1px solid rgba(215, 227, 239, 0.12);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(10, 18, 25, 0.08);
+      box-shadow: 0 8px 32px rgba(15, 28, 40, 0.10);
     }
 
     /* Status pulse */
@@ -120,7 +121,7 @@
     .svc-card:hover {
       transform: translateY(-8px);
       border-color: rgba(46, 196, 182, 0.45);
-      background: #1c3040;
+      background: #e8f6f4;
     }
 
     /* Gallery */
@@ -153,7 +154,7 @@
       appearance: none;
       height: 6px;
       border-radius: 999px;
-      background: rgba(215, 227, 239, 0.15);
+      background: rgba(10, 18, 25, 0.12);
       outline: none;
     }
     input[type="range"]::-webkit-slider-thumb {
@@ -168,7 +169,7 @@
 
     /* Map mock grid */
     .map-grid {
-      background-color: #13202c;
+      background-color: #e9f1f6;
       background-image:
         linear-gradient(rgba(46, 196, 182, 0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(46, 196, 182, 0.08) 1px, transparent 1px);
@@ -184,7 +185,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
       width: 40%;
       animation: shine 7s ease-in-out infinite;
       pointer-events: none;
@@ -194,7 +195,7 @@
 <body class="overflow-x-hidden bg-night text-mist">
 
   <!-- ========== TOP STATUS TICKER ========== -->
-  <div id="status-bar" class="relative z-[70] border-b border-white/5 bg-night-soft">
+  <div id="status-bar" class="relative z-[70] border-b border-black/5 bg-night-soft">
     <div class="mx-auto flex w-[min(1180px,calc(100%-1.5rem))] items-center justify-between gap-3 py-2 text-xs sm:text-sm">
       <div class="flex items-center gap-2 font-medium">
         <span class="live-dot inline-block h-2 w-2 rounded-full bg-aqua"></span>
@@ -214,7 +215,7 @@
       <button
         id="burger"
         type="button"
-        class="order-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 text-mist lg:hidden"
+        class="order-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-black/10 text-mist lg:hidden"
         aria-label="Abrir menu"
         aria-expanded="false"
       >
@@ -244,7 +245,7 @@
       <button
         type="button"
         data-open-quote
-        class="order-5 hidden shrink-0 rounded-xl bg-aqua px-4 py-2.5 text-sm font-bold text-night shadow-aqua transition hover:bg-aqua-soft sm:inline-flex"
+        class="order-5 hidden shrink-0 rounded-xl bg-aqua px-4 py-2.5 text-sm font-bold text-ink shadow-aqua transition hover:bg-aqua-soft sm:inline-flex"
       >
         Orçamento Rápido
       </button>
@@ -253,24 +254,24 @@
 
   <!-- Mobile drawer -->
   <div id="drawer-backdrop" class="drawer-backdrop fixed inset-0 z-[80] bg-night/70 backdrop-blur-sm"></div>
-  <aside id="drawer" class="drawer fixed inset-y-0 right-0 z-[90] flex w-[min(320px,88vw)] flex-col border-l border-white/10 bg-night-soft p-6 shadow-glass">
+  <aside id="drawer" class="drawer fixed inset-y-0 right-0 z-[90] flex w-[min(320px,88vw)] flex-col border-l border-black/10 bg-night-soft p-6 shadow-glass">
     <div class="mb-8 flex items-center justify-between">
       <div>
         <p class="font-display text-xl font-bold">LUMINA</p>
         <p class="text-xs uppercase tracking-widest text-aqua">Menu</p>
       </div>
-      <button id="drawer-close" type="button" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10" aria-label="Fechar menu">
+      <button id="drawer-close" type="button" class="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10" aria-label="Fechar menu">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
     <nav class="flex flex-col gap-1 text-base font-medium">
-      <a href="#servicos" class="rounded-xl px-3 py-3 hover:bg-white/5">Serviços</a>
-      <a href="#galeria" class="rounded-xl px-3 py-3 hover:bg-white/5">Projetos</a>
-      <a href="#diferenciais" class="rounded-xl px-3 py-3 hover:bg-white/5">Diferenciais</a>
-      <a href="#estimador" class="rounded-xl px-3 py-3 hover:bg-white/5">Estimador</a>
-      <a href="#contato" class="rounded-xl px-3 py-3 hover:bg-white/5">Contato</a>
+      <a href="#servicos" class="rounded-xl px-3 py-3 hover:bg-black/5">Serviços</a>
+      <a href="#galeria" class="rounded-xl px-3 py-3 hover:bg-black/5">Projetos</a>
+      <a href="#diferenciais" class="rounded-xl px-3 py-3 hover:bg-black/5">Diferenciais</a>
+      <a href="#estimador" class="rounded-xl px-3 py-3 hover:bg-black/5">Estimador</a>
+      <a href="#contato" class="rounded-xl px-3 py-3 hover:bg-black/5">Contato</a>
     </nav>
-    <button type="button" data-open-quote class="mt-6 rounded-xl bg-aqua px-4 py-3.5 text-sm font-bold text-night">
+    <button type="button" data-open-quote class="mt-6 rounded-xl bg-aqua px-4 py-3.5 text-sm font-bold text-ink">
       Orçamento Rápido
     </button>
     <a
@@ -314,7 +315,7 @@
             href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+vim+pelo+site+da+Vidra%C3%A7aria+Lumina+e+quero+um+or%C3%A7amento"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-night transition hover:brightness-110"
+            class="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-ink transition hover:brightness-110"
           >
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M20.5 3.5A11 11 0 0 0 3.1 17.4L2 22l4.7-1.2A11 11 0 1 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.8.7.7-2.7-.2-.3a9 9 0 1 1 7.2 3.8z"/>
@@ -324,13 +325,13 @@
           <button
             type="button"
             data-open-quote
-            class="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-bold text-mist backdrop-blur transition hover:border-aqua/50 hover:bg-white/10"
+            class="inline-flex items-center gap-2 rounded-xl border border-black/20 bg-black/5 px-6 py-3.5 text-sm font-bold text-mist backdrop-blur transition hover:border-aqua/50 hover:bg-black/10"
           >
             Pedir orçamento
           </button>
         </div>
 
-        <div class="reveal show delay-3 mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-6 text-sm">
+        <div class="reveal show delay-3 mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-black/10 pt-6 text-sm">
           <div>
             <p class="font-display text-lg font-bold text-mist">Medição gratuita*</p>
             <p class="text-xs uppercase tracking-wider text-mute">*Na região de Londrina</p>
@@ -360,7 +361,7 @@
 
         <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <!-- 1 -->
-          <article class="svc-card reveal rounded-2xl border border-white/10 bg-night-panel p-6">
+          <article class="svc-card reveal rounded-2xl border border-black/10 bg-night-panel p-6">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4zM8 8h8v8H8z"/></svg>
             </div>
@@ -370,7 +371,7 @@
           </article>
 
           <!-- 2 -->
-          <article class="svc-card reveal delay-1 rounded-2xl border border-white/10 bg-night-panel p-6">
+          <article class="svc-card reveal delay-1 rounded-2xl border border-black/10 bg-night-panel p-6">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>
             </div>
@@ -380,7 +381,7 @@
           </article>
 
           <!-- 3 -->
-          <article class="svc-card reveal delay-2 rounded-2xl border border-white/10 bg-night-panel p-6">
+          <article class="svc-card reveal delay-2 rounded-2xl border border-black/10 bg-night-panel p-6">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V8l9-5 9 5v13M9 21v-8h6v8"/></svg>
             </div>
@@ -390,7 +391,7 @@
           </article>
 
           <!-- 4 -->
-          <article class="svc-card reveal rounded-2xl border border-white/10 bg-night-panel p-6">
+          <article class="svc-card reveal rounded-2xl border border-black/10 bg-night-panel p-6">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V4h16v16M8 8h8M8 12h8M8 16h5"/></svg>
             </div>
@@ -400,7 +401,7 @@
           </article>
 
           <!-- 5 -->
-          <article class="svc-card reveal delay-1 rounded-2xl border border-white/10 bg-night-panel p-6">
+          <article class="svc-card reveal delay-1 rounded-2xl border border-black/10 bg-night-panel p-6">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
             </div>
@@ -410,7 +411,7 @@
           </article>
 
           <!-- 6 -->
-          <article class="svc-card reveal delay-2 rounded-2xl border border-white/10 bg-night-panel p-6">
+          <article class="svc-card reveal delay-2 rounded-2xl border border-black/10 bg-night-panel p-6">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-spark/15 text-spark">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
@@ -521,14 +522,14 @@
         </div>
 
         <div class="reveal delay-1 relative">
-          <div class="overflow-hidden rounded-3xl border border-white/10">
+          <div class="overflow-hidden rounded-3xl border border-black/10">
             <img
               src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1000&q=80"
               alt="Ambiente moderno com grandes panos de vidro"
               class="aspect-[4/5] w-full object-cover"
             />
           </div>
-          <div class="absolute -bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-night/90 p-5 backdrop-blur md:left-8 md:right-auto md:max-w-xs">
+          <div class="absolute -bottom-5 left-5 right-5 rounded-2xl border border-black/10 bg-night/90 p-5 backdrop-blur md:left-8 md:right-auto md:max-w-xs">
             <p class="font-display text-2xl font-bold text-aqua">Londrina · PR</p>
             <p class="mt-1 text-sm text-mute">Atendimento em Jardim Shangri-lá, Gleba Palhano, Centro e região metropolitana.</p>
           </div>
@@ -549,24 +550,24 @@
           </p>
         </div>
 
-        <div class="reveal delay-1 mx-auto mt-12 max-w-3xl rounded-3xl border border-white/10 bg-night-panel p-6 shadow-glass md:p-10">
+        <div class="reveal delay-1 mx-auto mt-12 max-w-3xl rounded-3xl border border-black/10 bg-night-panel p-6 shadow-glass md:p-10">
           <form id="estimator" class="grid gap-8">
             <div>
               <label class="mb-3 block text-sm font-semibold text-mist">Tipo de serviço</label>
               <div class="grid gap-3 sm:grid-cols-2">
-                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
                   <input type="radio" name="service" value="box" class="accent-aqua" checked />
                   <span class="text-sm">Box temperado</span>
                 </label>
-                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
                   <input type="radio" name="service" value="espelho" class="accent-aqua" />
                   <span class="text-sm">Espelho sob medida</span>
                 </label>
-                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
                   <input type="radio" name="service" value="janela" class="accent-aqua" />
                   <span class="text-sm">Janela / porta de vidro</span>
                 </label>
-                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-black/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
                   <input type="radio" name="service" value="guarda" class="accent-aqua" />
                   <span class="text-sm">Guarda-corpo</span>
                 </label>
@@ -587,7 +588,7 @@
 
             <div>
               <label for="finish" class="mb-3 block text-sm font-semibold text-mist">Acabamento</label>
-              <select id="finish" class="w-full rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm text-mist outline-none focus:border-aqua">
+              <select id="finish" class="w-full rounded-xl border border-black/10 bg-night-soft px-4 py-3 text-sm text-mist outline-none focus:border-aqua">
                 <option value="1">Padrão (incolor + ferragem cromada)</option>
                 <option value="1.18">Premium (fumê / verde + ferragem preta)</option>
                 <option value="1.35">Luxo (laminado / espessura reforçada)</option>
@@ -605,7 +606,7 @@
                 href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+simulei+no+site+e+quero+confirmar+or%C3%A7amento"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex shrink-0 rounded-xl bg-aqua px-5 py-3 text-sm font-bold text-night transition hover:bg-aqua-soft"
+                class="inline-flex shrink-0 rounded-xl bg-aqua px-5 py-3 text-sm font-bold text-ink transition hover:bg-aqua-soft"
               >
                 Confirmar no WhatsApp
               </a>
@@ -631,11 +632,11 @@
               href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+quero+agendar+medi%C3%A7%C3%A3o+com+a+Lumina"
               target="_blank"
               rel="noopener noreferrer"
-              class="rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-night"
+              class="rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-ink"
             >
               Agendar medição
             </a>
-            <button type="button" data-open-quote class="rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-bold text-mist backdrop-blur">
+            <button type="button" data-open-quote class="rounded-xl border border-black/20 bg-black/5 px-6 py-3.5 text-sm font-bold text-mist backdrop-blur">
               Orçamento Rápido
             </button>
           </div>
@@ -645,7 +646,7 @@
   </main>
 
   <!-- ========== FOOTER ========== -->
-  <footer id="contato" class="border-t border-white/10 bg-night-soft pt-16 pb-10">
+  <footer id="contato" class="border-t border-black/10 bg-night-soft pt-16 pb-10">
     <div class="mx-auto grid w-[min(1180px,calc(100%-1.5rem))] gap-10 lg:grid-cols-2">
       <div class="grid gap-8 sm:grid-cols-2">
         <div>
@@ -656,16 +657,16 @@
             Oficina local com instalação própria.
           </p>
           <div class="mt-5 flex gap-3">
-            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-mute transition hover:border-aqua hover:text-aqua" aria-label="Instagram">
+            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 text-mute transition hover:border-aqua hover:text-aqua" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.5.6.2 1 .5 1.5 1s.7.9 1 1.5c.2.5.4 1.2.5 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.5 2.4-.2.6-.5 1-1 1.5s-.9.7-1.5 1c-.5.2-1.2.4-2.4.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.4-.5-.6-.2-1-.5-1.5-1s-.7-.9-1-1.5c-.2-.5-.4-1.2-.5-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.5-2.4.2-.6.5-1 1-1.5s.9-.7 1.5-1c.5-.2 1.2-.4 2.4-.5C8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.2 0-3.5 0-4.8.1-1 .1-1.6.2-1.9.4-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.2.4-.3.9-.4 1.9-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1 .2 1.6.4 1.9.2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.2.9.3 1.9.4 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1-.1 1.6-.2 1.9-.4.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.2-.4.3-.9.4-1.9.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1-.2-1.6-.4-1.9-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.4-.2-.9-.3-1.9-.4-1.2-.1-1.6-.1-4.8-.1zm0 3.2a5.8 5.8 0 1 1 0 11.6 5.8 5.8 0 0 1 0-11.6zm0 1.8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm6.4-2.1a1.4 1.4 0 1 1 0 2.7 1.4 1.4 0 0 1 0-2.7z"/></svg>
             </a>
-            <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-mute transition hover:border-aqua hover:text-aqua" aria-label="Facebook">
+            <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 text-mute transition hover:border-aqua hover:text-aqua" aria-label="Facebook">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg>
             </a>
           </div>
         </div>
 
-        <div class="rounded-2xl border border-white/10 bg-night-panel p-5">
+        <div class="rounded-2xl border border-black/10 bg-night-panel p-5">
           <h4 class="text-xs font-bold uppercase tracking-wider text-aqua">Endereço</h4>
           <address class="mt-3 not-italic text-sm leading-relaxed text-mute">
             Rua das Magnólias, 890<br />
@@ -684,9 +685,9 @@
       </div>
 
       <!-- Map mockup -->
-      <div class="map-grid relative min-h-[280px] overflow-hidden rounded-3xl border border-white/10">
+      <div class="map-grid relative min-h-[280px] overflow-hidden rounded-3xl border border-black/10">
         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-          <div class="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-aqua text-night shadow-aqua">
+          <div class="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-aqua text-ink shadow-aqua">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
           </div>
           <p class="font-display text-xl font-bold">Vidraçaria Lumina</p>
@@ -695,7 +696,7 @@
             href="https://www.google.com/maps/search/?api=1&query=Rua+das+Magn%C3%B3lias+890+Londrina+PR"
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-5 inline-flex rounded-xl border border-aqua/40 bg-night/60 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-aqua backdrop-blur transition hover:bg-aqua hover:text-night"
+            class="mt-5 inline-flex rounded-xl border border-aqua/40 bg-night/60 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-aqua backdrop-blur transition hover:bg-aqua hover:text-ink"
           >
             Abrir no Google Maps
           </a>
@@ -703,7 +704,7 @@
       </div>
     </div>
 
-    <div class="mx-auto mt-12 flex w-[min(1180px,calc(100%-1.5rem))] flex-col gap-2 border-t border-white/10 pt-6 text-xs text-mute sm:flex-row sm:justify-between">
+    <div class="mx-auto mt-12 flex w-[min(1180px,calc(100%-1.5rem))] flex-col gap-2 border-t border-black/10 pt-6 text-xs text-mute sm:flex-row sm:justify-between">
       <span>© 2026 Vidraçaria Lumina · Londrina-PR</span>
       <span>Demo de site profissional para prospecção</span>
     </div>
@@ -722,20 +723,20 @@
 
   <!-- Quote Modal -->
   <div id="quote-modal" class="overlay fixed inset-0 z-[100] flex items-end justify-center bg-night/80 p-4 backdrop-blur-sm sm:items-center" role="dialog" aria-modal="true" aria-labelledby="quote-title" hidden>
-    <div class="w-full max-w-md rounded-3xl border border-white/10 bg-night-panel p-6 shadow-glass sm:p-8">
+    <div class="w-full max-w-md rounded-3xl border border-black/10 bg-night-panel p-6 shadow-glass sm:p-8">
       <div class="mb-5 flex items-start justify-between gap-3">
         <div>
           <h3 id="quote-title" class="font-display text-2xl font-bold">Orçamento Rápido</h3>
           <p class="mt-1 text-sm text-mute">Preencha e abriremos o WhatsApp com sua solicitação.</p>
         </div>
-        <button type="button" id="quote-close" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10" aria-label="Fechar">
+        <button type="button" id="quote-close" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-black/10" aria-label="Fechar">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
       </div>
       <form id="quote-form" class="grid gap-3">
-        <input name="nome" required placeholder="Seu nome" class="rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua" />
-        <input name="telefone" required placeholder="WhatsApp (com DDD)" class="rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua" />
-        <select name="servico" class="rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua">
+        <input name="nome" required placeholder="Seu nome" class="rounded-xl border border-black/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua" />
+        <input name="telefone" required placeholder="WhatsApp (com DDD)" class="rounded-xl border border-black/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua" />
+        <select name="servico" class="rounded-xl border border-black/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua">
           <option value="Box temperado">Box temperado</option>
           <option value="Espelho">Espelho sob medida</option>
           <option value="Janela/Porta">Janela / porta</option>
@@ -743,8 +744,8 @@
           <option value="Fachada">Fachada / vitrine</option>
           <option value="Manutenção">Manutenção / troca</option>
         </select>
-        <textarea name="detalhes" rows="3" placeholder="Medidas aproximadas, bairro ou detalhes" class="resize-none rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua"></textarea>
-        <button type="submit" class="mt-2 rounded-xl bg-aqua py-3.5 text-sm font-bold text-night transition hover:bg-aqua-soft">
+        <textarea name="detalhes" rows="3" placeholder="Medidas aproximadas, bairro ou detalhes" class="resize-none rounded-xl border border-black/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua"></textarea>
+        <button type="submit" class="mt-2 rounded-xl bg-aqua py-3.5 text-sm font-bold text-ink transition hover:bg-aqua-soft">
           Enviar no WhatsApp
         </button>
       </form>
@@ -753,7 +754,7 @@
 
   <!-- Lightbox -->
   <div id="lightbox" class="overlay fixed inset-0 z-[100] flex items-center justify-center bg-night/95 p-4" role="dialog" aria-modal="true" aria-label="Ampliar imagem" hidden>
-    <button type="button" id="lightbox-close" class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/20" aria-label="Fechar">
+    <button type="button" id="lightbox-close" class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-black/20" aria-label="Fechar">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
     <img id="lightbox-img" src="" alt="" class="max-h-[85vh] max-w-full rounded-xl object-contain" />
