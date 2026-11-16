@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vidraçaria Lumina — Vidros, Espelhos e Box em Londrina</title>
+  <meta
+    name="description"
+    content="Vidraçaria Lumina em Londrina-PR. Box temperado, espelhos sob medida, janelas e fachadas de vidro. Orçamento rápido pelo WhatsApp (15) 99795-7851."
+  />
+  <meta name="theme-color" content="#0a1219" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Sora:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            night: {
+              DEFAULT: "#0a1219",
+              soft: "#111c27",
+              panel: "#172533",
+              line: "rgba(200,220,240,0.12)",
+            },
+            mist: "#d7e3ef",
+            mute: "#8aa0b5",
+            aqua: {
+              DEFAULT: "#2ec4b6",
+              soft: "#5ed9cd",
+              deep: "#1f9e93",
+            },
+            spark: "#ff8a3d",
+          },
+          fontFamily: {
+            display: ["Sora", "system-ui", "sans-serif"],
+            body: ["DM Sans", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            glass: "0 8px 32px rgba(0,0,0,0.28)",
+            aqua: "0 12px 40px rgba(46,196,182,0.28)",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --night: #0a1219;
+      --aqua: #2ec4b6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--night);
+      color: #d7e3ef;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-display { font-family: "Sora", system-ui, sans-serif; }
+
+    /* Glass navbar */
+    .nav-glass {
+      background: rgba(10, 18, 25, 0.55);
+      backdrop-filter: blur(18px) saturate(1.35);
+      -webkit-backdrop-filter: blur(18px) saturate(1.35);
+      border: 1px solid rgba(215, 227, 239, 0.12);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+    }
+
+    /* Status pulse */
+    @keyframes live-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.55; }
+    }
+    .live-dot { animation: live-dot 1.6s ease-in-out infinite; }
+
+    /* Drawer */
+    .drawer {
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .drawer.open { transform: translateX(0); }
+
+    .drawer-backdrop {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .drawer-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.show { opacity: 1; transform: none; }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* Service cards */
+    .svc-card {
+      transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    }
+    .svc-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(46, 196, 182, 0.45);
+      background: #1c3040;
+    }
+
+    /* Gallery */
+    .gal-item img {
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .gal-item:hover img { transform: scale(1.07); }
+
+    /* Modal / lightbox */
+    .overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* WhatsApp float */
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
+      50% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+    }
+    .wa-float { animation: wa-pulse 2.4s ease-out infinite; }
+
+    /* Estimator range accent */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(215, 227, 239, 0.15);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--aqua);
+      cursor: pointer;
+      box-shadow: 0 0 0 4px rgba(46, 196, 182, 0.2);
+    }
+
+    /* Map mock grid */
+    .map-grid {
+      background-color: #13202c;
+      background-image:
+        linear-gradient(rgba(46, 196, 182, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 196, 182, 0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Hero shine sweep */
+    @keyframes shine {
+      0% { transform: translateX(-120%) skewX(-12deg); }
+      100% { transform: translateX(220%) skewX(-12deg); }
+    }
+    .hero-shine::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      width: 40%;
+      animation: shine 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-night text-mist">
+
+  <!-- ========== TOP STATUS TICKER ========== -->
+  <div id="status-bar" class="relative z-[70] border-b border-white/5 bg-night-soft">
+    <div class="mx-auto flex w-[min(1180px,calc(100%-1.5rem))] items-center justify-between gap-3 py-2 text-xs sm:text-sm">
+      <div class="flex items-center gap-2 font-medium">
+        <span class="live-dot inline-block h-2 w-2 rounded-full bg-aqua"></span>
+        <span id="status-text" class="text-aqua">Aberto agora · Atendimento rápido</span>
+        <span class="hidden text-mute sm:inline">· Seg–Sex 08h–18h · Sáb 08h–12h</span>
+      </div>
+      <a href="tel:+5515997957851" class="font-semibold text-mist transition hover:text-aqua">
+        Ligar · (15) 99795-7851
+      </a>
+    </div>
+  </div>
+
+  <!-- ========== FLOATING GLASS NAV ========== -->
+  <header class="sticky top-2 z-[60] px-3 sm:px-4">
+    <div class="nav-glass mx-auto flex w-[min(1180px,100%)] items-center gap-3 rounded-2xl px-3 py-2.5 sm:px-5 sm:py-3">
+      <!-- Brand centered-ish with asymmetric actions -->
+      <button
+        id="burger"
+        type="button"
+        class="order-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 text-mist lg:hidden"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 7h16M4 12h12M4 17h16" />
+        </svg>
+      </button>
+
+      <nav class="order-2 hidden flex-1 items-center gap-6 text-sm font-medium text-mute lg:flex" aria-label="Principal">
+        <a href="#servicos" class="transition hover:text-mist">Serviços</a>
+        <a href="#galeria" class="transition hover:text-mist">Projetos</a>
+        <a href="#diferenciais" class="transition hover:text-mist">Diferenciais</a>
+      </nav>
+
+      <a href="#inicio" class="order-3 mx-auto flex flex-col items-center text-center lg:order-none lg:mx-0 lg:flex-1" aria-label="Vidraçaria Lumina">
+        <span class="font-display text-lg font-extrabold tracking-tight text-mist sm:text-xl">
+          LUMINA
+        </span>
+        <span class="text-[10px] font-semibold uppercase tracking-[0.28em] text-aqua">Vidraçaria · Londrina</span>
+      </a>
+
+      <nav class="order-4 hidden flex-1 items-center justify-end gap-6 text-sm font-medium text-mute lg:flex" aria-label="Secundário">
+        <a href="#estimador" class="transition hover:text-mist">Estimador</a>
+        <a href="#contato" class="transition hover:text-mist">Contato</a>
+      </nav>
+
+      <button
+        type="button"
+        data-open-quote
+        class="order-5 hidden shrink-0 rounded-xl bg-aqua px-4 py-2.5 text-sm font-bold text-night shadow-aqua transition hover:bg-aqua-soft sm:inline-flex"
+      >
+        Orçamento Rápido
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div id="drawer-backdrop" class="drawer-backdrop fixed inset-0 z-[80] bg-night/70 backdrop-blur-sm"></div>
+  <aside id="drawer" class="drawer fixed inset-y-0 right-0 z-[90] flex w-[min(320px,88vw)] flex-col border-l border-white/10 bg-night-soft p-6 shadow-glass">
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <p class="font-display text-xl font-bold">LUMINA</p>
+        <p class="text-xs uppercase tracking-widest text-aqua">Menu</p>
+      </div>
+      <button id="drawer-close" type="button" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10" aria-label="Fechar menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-1 text-base font-medium">
+      <a href="#servicos" class="rounded-xl px-3 py-3 hover:bg-white/5">Serviços</a>
+      <a href="#galeria" class="rounded-xl px-3 py-3 hover:bg-white/5">Projetos</a>
+      <a href="#diferenciais" class="rounded-xl px-3 py-3 hover:bg-white/5">Diferenciais</a>
+      <a href="#estimador" class="rounded-xl px-3 py-3 hover:bg-white/5">Estimador</a>
+      <a href="#contato" class="rounded-xl px-3 py-3 hover:bg-white/5">Contato</a>
+    </nav>
+    <button type="button" data-open-quote class="mt-6 rounded-xl bg-aqua px-4 py-3.5 text-sm font-bold text-night">
+      Orçamento Rápido
+    </button>
+    <a
+      href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+vim+pelo+site+da+Vidra%C3%A7aria+Lumina"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-3 rounded-xl border border-aqua/40 px-4 py-3.5 text-center text-sm font-bold text-aqua"
+    >
+      WhatsApp
+    </a>
+  </aside>
+
+  <main>
+    <!-- ========== HERO ========== -->
+    <section id="inicio" class="hero-shine relative min-h-[calc(100svh-6rem)] overflow-hidden">
+      <div class="absolute inset-0" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=80"
+          alt=""
+          class="h-full w-full object-cover object-center"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-night via-transparent to-night/50"></div>
+      </div>
+
+      <div class="relative mx-auto flex min-h-[calc(100svh-6rem)] w-[min(1180px,calc(100%-1.5rem))] flex-col justify-end pb-14 pt-24 md:justify-center md:pb-20">
+        <p class="reveal show font-display text-xs font-bold uppercase tracking-[0.35em] text-aqua">
+          Vidraçaria Lumina
+        </p>
+        <h1 class="reveal show delay-1 mt-4 max-w-3xl font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-mist sm:text-6xl md:text-7xl lg:text-8xl">
+          Vidro sob medida<br />
+          <span class="text-aqua">que transforma o ambiente</span>
+        </h1>
+        <p class="reveal show delay-2 mt-6 max-w-xl text-base leading-relaxed text-mute md:text-lg">
+          Box temperado, espelhos, janelas e fachadas em Londrina e região —
+          medição no local, corte preciso e instalação caprichada.
+        </p>
+
+        <div class="reveal show delay-3 mt-8 flex flex-wrap gap-3">
+          <a
+            href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+vim+pelo+site+da+Vidra%C3%A7aria+Lumina+e+quero+um+or%C3%A7amento"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-night transition hover:brightness-110"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.5 3.5A11 11 0 0 0 3.1 17.4L2 22l4.7-1.2A11 11 0 1 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.8.7.7-2.7-.2-.3a9 9 0 1 1 7.2 3.8z"/>
+            </svg>
+            Chamar no WhatsApp
+          </a>
+          <button
+            type="button"
+            data-open-quote
+            class="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-bold text-mist backdrop-blur transition hover:border-aqua/50 hover:bg-white/10"
+          >
+            Pedir orçamento
+          </button>
+        </div>
+
+        <div class="reveal show delay-3 mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-6 text-sm">
+          <div>
+            <p class="font-display text-lg font-bold text-mist">Medição gratuita*</p>
+            <p class="text-xs uppercase tracking-wider text-mute">*Na região de Londrina</p>
+          </div>
+          <div>
+            <p class="font-display text-lg font-bold text-mist">Vidro temperado</p>
+            <p class="text-xs uppercase tracking-wider text-mute">Norma NBR · segurança</p>
+          </div>
+          <div>
+            <p class="font-display text-lg font-bold text-mist">Instalação própria</p>
+            <p class="text-xs uppercase tracking-wider text-mute">Equipe da casa</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SERVICES ========== -->
+    <section id="servicos" class="bg-night-soft py-20 md:py-28">
+      <div class="mx-auto w-[min(1180px,calc(100%-1.5rem))]">
+        <div class="reveal max-w-2xl">
+          <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Serviços</p>
+          <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight text-mist md:text-5xl">
+            Matriz completa de vidraçaria
+          </h2>
+          <p class="mt-4 text-mute">Do box do banheiro à fachada comercial — cada peça medida, cortada e instalada sob medida.</p>
+        </div>
+
+        <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- 1 -->
+          <article class="svc-card reveal rounded-2xl border border-white/10 bg-night-panel p-6">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4zM8 8h8v8H8z"/></svg>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">Box temperado</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Boxes de canto, frontal e niche — ferragens cromadas ou pretas, vidro incolor ou fumê.</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wider text-aqua">Banheiro · residencial</p>
+          </article>
+
+          <!-- 2 -->
+          <article class="svc-card reveal delay-1 rounded-2xl border border-white/10 bg-night-panel p-6">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">Espelhos sob medida</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Espelhos para sala, academia, salão e closet — com ou sem bisotê, instalação segura.</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wider text-aqua">Decoração · ampliação visual</p>
+          </article>
+
+          <!-- 3 -->
+          <article class="svc-card reveal delay-2 rounded-2xl border border-white/10 bg-night-panel p-6">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V8l9-5 9 5v13M9 21v-8h6v8"/></svg>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">Janelas e portas</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Sistemas em alumínio com vidro temperado ou laminado — troca e instalação nova.</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wider text-aqua">Residencial · comercial</p>
+          </article>
+
+          <!-- 4 -->
+          <article class="svc-card reveal rounded-2xl border border-white/10 bg-night-panel p-6">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V4h16v16M8 8h8M8 12h8M8 16h5"/></svg>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">Guarda-corpo & peitoril</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Proteção em vidro temperado para sacadas, mezaninos e escadas com acabamento limpo.</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wider text-aqua">Segurança · estética</p>
+          </article>
+
+          <!-- 5 -->
+          <article class="svc-card reveal delay-1 rounded-2xl border border-white/10 bg-night-panel p-6">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-aqua/15 text-aqua">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">Fachadas e vitrines</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Painéis e vitrines para lojas e clínicas — transparência, luminosidade e presença de marca.</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wider text-aqua">Comércio · clínicas</p>
+          </article>
+
+          <!-- 6 -->
+          <article class="svc-card reveal delay-2 rounded-2xl border border-white/10 bg-night-panel p-6">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-spark/15 text-spark">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-bold">Manutenção & troca</h3>
+            <p class="mt-2 text-sm leading-relaxed text-mute">Troca de vidros quebrados, ajuste de trilhos, ferragens e reparos emergenciais.</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wider text-spark">Atendimento ágil</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== GALLERY ========== -->
+    <section id="galeria" class="py-20 md:py-28">
+      <div class="mx-auto w-[min(1180px,calc(100%-1.5rem))]">
+        <div class="reveal flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div class="max-w-xl">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Projetos</p>
+            <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight md:text-5xl">Vidro em ação</h2>
+          </div>
+          <p class="max-w-xs text-sm text-mute">Toque para ampliar. Referências do universo de vidraçaria residencial e comercial.</p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+          <button type="button" class="gal-item reveal group relative aspect-[4/5] overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua" data-full="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80" data-alt="Ambiente moderno com vidro">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80" alt="Ambiente moderno com vidro" class="h-full w-full object-cover" loading="lazy" />
+            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-night/80 to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+              <span class="text-xs font-bold uppercase tracking-wider">Residencial</span>
+            </span>
+          </button>
+          <button type="button" class="gal-item reveal delay-1 group relative aspect-[4/5] overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua" data-full="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=80" data-alt="Interior com luz natural">
+            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=700&q=80" alt="Interior com luz natural" class="h-full w-full object-cover" loading="lazy" />
+            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-night/80 to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+              <span class="text-xs font-bold uppercase tracking-wider">Luz natural</span>
+            </span>
+          </button>
+          <button type="button" class="gal-item reveal delay-2 group relative aspect-[4/5] overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua" data-full="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=80" data-alt="Banheiro contemporâneo">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=80" alt="Banheiro contemporâneo" class="h-full w-full object-cover" loading="lazy" />
+            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-night/80 to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+              <span class="text-xs font-bold uppercase tracking-wider">Box & banheiro</span>
+            </span>
+          </button>
+          <button type="button" class="gal-item reveal group relative aspect-[4/3] overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua md:col-span-1" data-full="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80" data-alt="Fachada comercial com vidro">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=80" alt="Fachada comercial com vidro" class="h-full w-full object-cover" loading="lazy" />
+            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-night/80 to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+              <span class="text-xs font-bold uppercase tracking-wider">Fachada</span>
+            </span>
+          </button>
+          <button type="button" class="gal-item reveal delay-1 group relative aspect-[4/3] overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua" data-full="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1400&q=80" data-alt="Espelho e ambientação">
+            <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=700&q=80" alt="Espelho e ambientação" class="h-full w-full object-cover" loading="lazy" />
+            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-night/80 to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+              <span class="text-xs font-bold uppercase tracking-wider">Espelhos</span>
+            </span>
+          </button>
+          <button type="button" class="gal-item reveal delay-2 group relative aspect-[4/3] overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-aqua" data-full="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1400&q=80" data-alt="Detalhe arquitetônico em vidro">
+            <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=700&q=80" alt="Detalhe arquitetônico em vidro" class="h-full w-full object-cover" loading="lazy" />
+            <span class="absolute inset-0 flex items-end bg-gradient-to-t from-night/80 to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+              <span class="text-xs font-bold uppercase tracking-wider">Detalhe</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WHY US ========== -->
+    <section id="diferenciais" class="relative overflow-hidden bg-night-soft py-20 md:py-28">
+      <div class="absolute -right-20 top-10 h-72 w-72 rounded-full bg-aqua/10 blur-3xl" aria-hidden="true"></div>
+      <div class="relative mx-auto grid w-[min(1180px,calc(100%-1.5rem))] gap-12 lg:grid-cols-2 lg:items-center">
+        <div class="reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Por que a Lumina</p>
+          <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight md:text-5xl">
+            Clareza no processo, precisão na instalação
+          </h2>
+          <p class="mt-5 text-mute md:text-lg">
+            Trabalhamos como oficina local: você fala direto com quem mede, corta e instala —
+            sem intermediário e com prazo combinado de verdade.
+          </p>
+
+          <ul class="mt-8 space-y-5">
+            <li class="flex gap-4">
+              <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-aqua/15 font-display text-sm font-bold text-aqua">01</span>
+              <div>
+                <p class="font-semibold text-mist">Medição no local</p>
+                <p class="mt-1 text-sm text-mute">Visitamos o ambiente para garantir encaixe perfeito — sem surpresa na hora de instalar.</p>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-aqua/15 font-display text-sm font-bold text-aqua">02</span>
+              <div>
+                <p class="font-semibold text-mist">Material de procedência</p>
+                <p class="mt-1 text-sm text-mute">Vidro temperado e laminado com rastreabilidade, ferragens de linha profissional.</p>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-aqua/15 font-display text-sm font-bold text-aqua">03</span>
+              <div>
+                <p class="font-semibold text-mist">Comunicação direta</p>
+                <p class="mt-1 text-sm text-mute">Orçamento e atualizações pelo WhatsApp — respostas claras, em português simples.</p>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-aqua/15 font-display text-sm font-bold text-aqua">04</span>
+              <div>
+                <p class="font-semibold text-mist">Limpeza pós-obra</p>
+                <p class="mt-1 text-sm text-mute">Entregamos o ambiente utilizável: remoção de resíduos e orientação de uso.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal delay-1 relative">
+          <div class="overflow-hidden rounded-3xl border border-white/10">
+            <img
+              src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1000&q=80"
+              alt="Ambiente moderno com grandes panos de vidro"
+              class="aspect-[4/5] w-full object-cover"
+            />
+          </div>
+          <div class="absolute -bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-night/90 p-5 backdrop-blur md:left-8 md:right-auto md:max-w-xs">
+            <p class="font-display text-2xl font-bold text-aqua">Londrina · PR</p>
+            <p class="mt-1 text-sm text-mute">Atendimento em Jardim Shangri-lá, Gleba Palhano, Centro e região metropolitana.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== COST ESTIMATOR ========== -->
+    <section id="estimador" class="py-20 md:py-28">
+      <div class="mx-auto w-[min(1180px,calc(100%-1.5rem))]">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Estimador rápido</p>
+          <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight md:text-5xl">
+            Simule uma faixa de investimento
+          </h2>
+          <p class="mt-4 text-mute">
+            Ferramenta ilustrativa para ter uma ideia — o valor final depende da medição e do projeto.
+          </p>
+        </div>
+
+        <div class="reveal delay-1 mx-auto mt-12 max-w-3xl rounded-3xl border border-white/10 bg-night-panel p-6 shadow-glass md:p-10">
+          <form id="estimator" class="grid gap-8">
+            <div>
+              <label class="mb-3 block text-sm font-semibold text-mist">Tipo de serviço</label>
+              <div class="grid gap-3 sm:grid-cols-2">
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                  <input type="radio" name="service" value="box" class="accent-aqua" checked />
+                  <span class="text-sm">Box temperado</span>
+                </label>
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                  <input type="radio" name="service" value="espelho" class="accent-aqua" />
+                  <span class="text-sm">Espelho sob medida</span>
+                </label>
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                  <input type="radio" name="service" value="janela" class="accent-aqua" />
+                  <span class="text-sm">Janela / porta de vidro</span>
+                </label>
+                <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-night-soft px-4 py-3 has-[:checked]:border-aqua has-[:checked]:bg-aqua/10">
+                  <input type="radio" name="service" value="guarda" class="accent-aqua" />
+                  <span class="text-sm">Guarda-corpo</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <div class="mb-3 flex items-center justify-between">
+                <label for="area" class="text-sm font-semibold text-mist">Área aproximada (m²)</label>
+                <span id="area-value" class="font-display text-lg font-bold text-aqua">2,5 m²</span>
+              </div>
+              <input id="area" type="range" min="1" max="20" step="0.5" value="2.5" class="w-full" />
+              <div class="mt-2 flex justify-between text-xs text-mute">
+                <span>1 m²</span>
+                <span>20 m²</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="finish" class="mb-3 block text-sm font-semibold text-mist">Acabamento</label>
+              <select id="finish" class="w-full rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm text-mist outline-none focus:border-aqua">
+                <option value="1">Padrão (incolor + ferragem cromada)</option>
+                <option value="1.18">Premium (fumê / verde + ferragem preta)</option>
+                <option value="1.35">Luxo (laminado / espessura reforçada)</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col items-start justify-between gap-4 rounded-2xl border border-aqua/25 bg-aqua/10 p-5 sm:flex-row sm:items-center">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-aqua">Faixa estimada</p>
+                <p id="estimate-range" class="mt-1 font-display text-3xl font-extrabold text-mist">R$ 1.050 – R$ 1.350</p>
+                <p class="mt-1 text-xs text-mute">Valores ilustrativos · confirmação após medição</p>
+              </div>
+              <a
+                id="estimate-wa"
+                href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+simulei+no+site+e+quero+confirmar+or%C3%A7amento"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex shrink-0 rounded-xl bg-aqua px-5 py-3 text-sm font-bold text-night transition hover:bg-aqua-soft"
+              >
+                Confirmar no WhatsApp
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="relative overflow-hidden py-20">
+      <div class="absolute inset-0" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80" alt="" class="h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-night/80"></div>
+      </div>
+      <div class="relative mx-auto w-[min(1180px,calc(100%-1.5rem))] text-center">
+        <div class="reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.3em] text-aqua">Próximo passo</p>
+          <h2 class="mt-3 font-display text-4xl font-extrabold md:text-5xl">Vamos medir o seu projeto?</h2>
+          <p class="mx-auto mt-4 max-w-lg text-mute">Envie uma foto do local ou peça a visita técnica — respondemos em horário comercial.</p>
+          <div class="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+quero+agendar+medi%C3%A7%C3%A3o+com+a+Lumina"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-night"
+            >
+              Agendar medição
+            </a>
+            <button type="button" data-open-quote class="rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-bold text-mist backdrop-blur">
+              Orçamento Rápido
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer id="contato" class="border-t border-white/10 bg-night-soft pt-16 pb-10">
+    <div class="mx-auto grid w-[min(1180px,calc(100%-1.5rem))] gap-10 lg:grid-cols-2">
+      <div class="grid gap-8 sm:grid-cols-2">
+        <div>
+          <p class="font-display text-2xl font-extrabold tracking-tight">LUMINA</p>
+          <p class="mt-1 text-xs font-semibold uppercase tracking-[0.25em] text-aqua">Vidraçaria</p>
+          <p class="mt-4 text-sm leading-relaxed text-mute">
+            Vidros temperados, espelhos e alumínio sob medida em Londrina-PR.
+            Oficina local com instalação própria.
+          </p>
+          <div class="mt-5 flex gap-3">
+            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-mute transition hover:border-aqua hover:text-aqua" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.4.5.6.2 1 .5 1.5 1s.7.9 1 1.5c.2.5.4 1.2.5 2.4.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.5 2.4-.2.6-.5 1-1 1.5s-.9.7-1.5 1c-.5.2-1.2.4-2.4.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.4-.5-.6-.2-1-.5-1.5-1s-.7-.9-1-1.5c-.2-.5-.4-1.2-.5-2.4C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.5-2.4.2-.6.5-1 1-1.5s.9-.7 1.5-1c.5-.2 1.2-.4 2.4-.5C8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.2 0-3.5 0-4.8.1-1 .1-1.6.2-1.9.4-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.2.4-.3.9-.4 1.9-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1 .2 1.6.4 1.9.2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.2.9.3 1.9.4 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1-.1 1.6-.2 1.9-.4.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.2-.4.3-.9.4-1.9.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1-.2-1.6-.4-1.9-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.4-.2-.9-.3-1.9-.4-1.2-.1-1.6-.1-4.8-.1zm0 3.2a5.8 5.8 0 1 1 0 11.6 5.8 5.8 0 0 1 0-11.6zm0 1.8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm6.4-2.1a1.4 1.4 0 1 1 0 2.7 1.4 1.4 0 0 1 0-2.7z"/></svg>
+            </a>
+            <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-mute transition hover:border-aqua hover:text-aqua" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-night-panel p-5">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-aqua">Endereço</h4>
+          <address class="mt-3 not-italic text-sm leading-relaxed text-mute">
+            Rua das Magnólias, 890<br />
+            Jardim Shangri-lá<br />
+            Londrina · PR<br />
+            CEP 86070-410
+          </address>
+          <h4 class="mt-5 text-xs font-bold uppercase tracking-wider text-aqua">Horário</h4>
+          <ul class="mt-2 space-y-1 text-sm text-mute">
+            <li class="flex justify-between gap-3"><span>Seg – Sex</span><span class="text-mist">08h – 18h</span></li>
+            <li class="flex justify-between gap-3"><span>Sábado</span><span class="text-mist">08h – 12h</span></li>
+            <li class="flex justify-between gap-3"><span>Domingo</span><span class="text-mist">Fechado</span></li>
+          </ul>
+          <a href="tel:+5515997957851" class="mt-4 inline-block text-sm font-bold text-mist hover:text-aqua">(15) 99795-7851</a>
+        </div>
+      </div>
+
+      <!-- Map mockup -->
+      <div class="map-grid relative min-h-[280px] overflow-hidden rounded-3xl border border-white/10">
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+          <div class="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-aqua text-night shadow-aqua">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+          </div>
+          <p class="font-display text-xl font-bold">Vidraçaria Lumina</p>
+          <p class="mt-1 text-sm text-mute">Jardim Shangri-lá · Londrina-PR</p>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Rua+das+Magn%C3%B3lias+890+Londrina+PR"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-5 inline-flex rounded-xl border border-aqua/40 bg-night/60 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-aqua backdrop-blur transition hover:bg-aqua hover:text-night"
+          >
+            Abrir no Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-12 flex w-[min(1180px,calc(100%-1.5rem))] flex-col gap-2 border-t border-white/10 pt-6 text-xs text-mute sm:flex-row sm:justify-between">
+      <span>© 2026 Vidraçaria Lumina · Londrina-PR</span>
+      <span>Demo de site profissional para prospecção</span>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a
+    href="https://wa.me/5515997957851?text=Ol%C3%A1%2C+vim+pelo+site+da+Vidra%C3%A7aria+Lumina"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="wa-float fixed bottom-5 right-5 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
+    aria-label="WhatsApp"
+  >
+    <svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11 11 0 0 0 3.1 17.4L2 22l4.7-1.2A11 11 0 1 0 20.5 3.5zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.8.7.7-2.7-.2-.3a9 9 0 1 1 7.2 3.8zm5-6.7c-.3-.1-1.6-.8-1.9-.9s-.4-.1-.6.1-.7.9-.8 1-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5.1-.3c0-.1 0-.3-.1-.4s-.6-1.4-.8-1.9-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3s-.8.8-.8 1.9.8 2.2.9 2.3a9.7 9.7 0 0 0 3.6 3.3c1.3.6 1.7.6 2.3.5s1.1-.5 1.2-.9.2-.8.1-.9-.2-.2-.5-.3z"/></svg>
+  </a>
+
+  <!-- Quote Modal -->
+  <div id="quote-modal" class="overlay fixed inset-0 z-[100] flex items-end justify-center bg-night/80 p-4 backdrop-blur-sm sm:items-center" role="dialog" aria-modal="true" aria-labelledby="quote-title" hidden>
+    <div class="w-full max-w-md rounded-3xl border border-white/10 bg-night-panel p-6 shadow-glass sm:p-8">
+      <div class="mb-5 flex items-start justify-between gap-3">
+        <div>
+          <h3 id="quote-title" class="font-display text-2xl font-bold">Orçamento Rápido</h3>
+          <p class="mt-1 text-sm text-mute">Preencha e abriremos o WhatsApp com sua solicitação.</p>
+        </div>
+        <button type="button" id="quote-close" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <form id="quote-form" class="grid gap-3">
+        <input name="nome" required placeholder="Seu nome" class="rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua" />
+        <input name="telefone" required placeholder="WhatsApp (com DDD)" class="rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua" />
+        <select name="servico" class="rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua">
+          <option value="Box temperado">Box temperado</option>
+          <option value="Espelho">Espelho sob medida</option>
+          <option value="Janela/Porta">Janela / porta</option>
+          <option value="Guarda-corpo">Guarda-corpo</option>
+          <option value="Fachada">Fachada / vitrine</option>
+          <option value="Manutenção">Manutenção / troca</option>
+        </select>
+        <textarea name="detalhes" rows="3" placeholder="Medidas aproximadas, bairro ou detalhes" class="resize-none rounded-xl border border-white/10 bg-night-soft px-4 py-3 text-sm outline-none focus:border-aqua"></textarea>
+        <button type="submit" class="mt-2 rounded-xl bg-aqua py-3.5 text-sm font-bold text-night transition hover:bg-aqua-soft">
+          Enviar no WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="overlay fixed inset-0 z-[100] flex items-center justify-center bg-night/95 p-4" role="dialog" aria-modal="true" aria-label="Ampliar imagem" hidden>
+    <button type="button" id="lightbox-close" class="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/20" aria-label="Fechar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img id="lightbox-img" src="" alt="" class="max-h-[85vh] max-w-full rounded-xl object-contain" />
+  </div>
+
+  <script>
+    (() => {
+      /* ---- Status bar: open/closed by Londrina local time (UTC-3) ---- */
+      const statusText = document.getElementById("status-text");
+      const updateStatus = () => {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/Sao_Paulo",
+          weekday: "short",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: false,
+        });
+        const parts = formatter.formatToParts(now);
+        const get = (type) => parts.find((p) => p.type === type)?.value;
+        const weekday = get("weekday"); // Mon, Tue...
+        const hour = Number(get("hour"));
+        const minute = Number(get("minute"));
+        const mins = hour * 60 + minute;
+
+        const map = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 0 };
+        const day = map[weekday] ?? now.getDay();
+
+        let open = false;
+        if (day >= 1 && day <= 5) open = mins >= 8 * 60 && mins < 18 * 60;
+        if (day === 6) open = mins >= 8 * 60 && mins < 12 * 60;
+
+        if (statusText) {
+          statusText.textContent = open
+            ? "Aberto agora · Atendimento rápido"
+            : "Fechado agora · Deixe mensagem no WhatsApp";
+          statusText.classList.toggle("text-aqua", open);
+          statusText.classList.toggle("text-spark", !open);
+        }
+      };
+      updateStatus();
+      setInterval(updateStatus, 60000);
+
+      /* ---- Mobile drawer ---- */
+      const burger = document.getElementById("burger");
+      const drawer = document.getElementById("drawer");
+      const drawerBackdrop = document.getElementById("drawer-backdrop");
+      const drawerClose = document.getElementById("drawer-close");
+
+      const setDrawer = (open) => {
+        drawer?.classList.toggle("open", open);
+        drawerBackdrop?.classList.toggle("open", open);
+        burger?.setAttribute("aria-expanded", String(open));
+        document.body.style.overflow = open ? "hidden" : "";
+      };
+
+      burger?.addEventListener("click", () => setDrawer(true));
+      drawerClose?.addEventListener("click", () => setDrawer(false));
+      drawerBackdrop?.addEventListener("click", () => setDrawer(false));
+      drawer?.querySelectorAll("a, button[data-open-quote]").forEach((el) => {
+        el.addEventListener("click", () => setDrawer(false));
+      });
+
+      /* ---- Reveal ---- */
+      const reveals = document.querySelectorAll(".reveal:not(.show)");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("show");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+        );
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add("show"));
+      }
+
+      /* ---- Quote modal ---- */
+      const quoteModal = document.getElementById("quote-modal");
+      const quoteForm = document.getElementById("quote-form");
+      const quoteClose = document.getElementById("quote-close");
+
+      const openQuote = () => {
+        quoteModal.hidden = false;
+        requestAnimationFrame(() => quoteModal.classList.add("open"));
+        document.body.style.overflow = "hidden";
+      };
+      const closeQuote = () => {
+        quoteModal.classList.remove("open");
+        document.body.style.overflow = "";
+        setTimeout(() => { quoteModal.hidden = true; }, 280);
+      };
+
+      document.querySelectorAll("[data-open-quote]").forEach((btn) => {
+        btn.addEventListener("click", openQuote);
+      });
+      quoteClose?.addEventListener("click", closeQuote);
+      quoteModal?.addEventListener("click", (e) => {
+        if (e.target === quoteModal) closeQuote();
+      });
+
+      quoteForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(quoteForm);
+        const text = [
+          "Olá! Quero um orçamento pela Vidraçaria Lumina.",
+          `Nome: ${data.get("nome")}`,
+          `WhatsApp: ${data.get("telefone")}`,
+          `Serviço: ${data.get("servico")}`,
+          data.get("detalhes") ? `Detalhes: ${data.get("detalhes")}` : "",
+        ]
+          .filter(Boolean)
+          .join("\n");
+        window.open(`https://wa.me/5515997957851?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+        closeQuote();
+      });
+
+      /* ---- Lightbox ---- */
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      const lightboxClose = document.getElementById("lightbox-close");
+
+      const openLb = (src, alt) => {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || "";
+        lightbox.hidden = false;
+        requestAnimationFrame(() => lightbox.classList.add("open"));
+        document.body.style.overflow = "hidden";
+      };
+      const closeLb = () => {
+        lightbox.classList.remove("open");
+        document.body.style.overflow = "";
+        setTimeout(() => {
+          lightbox.hidden = true;
+          lightboxImg.src = "";
+        }, 280);
+      };
+
+      document.querySelectorAll(".gal-item").forEach((btn) => {
+        btn.addEventListener("click", () => openLb(btn.dataset.full, btn.dataset.alt));
+      });
+      lightboxClose?.addEventListener("click", closeLb);
+      lightbox?.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLb();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        if (quoteModal?.classList.contains("open")) closeQuote();
+        if (lightbox?.classList.contains("open")) closeLb();
+        if (drawer?.classList.contains("open")) setDrawer(false);
+      });
+
+      /* ---- Cost estimator ---- */
+      const RATES = {
+        box: 420,
+        espelho: 280,
+        janela: 480,
+        guarda: 560,
+      };
+      const LABELS = {
+        box: "Box temperado",
+        espelho: "Espelho sob medida",
+        janela: "Janela / porta de vidro",
+        guarda: "Guarda-corpo",
+      };
+
+      const areaInput = document.getElementById("area");
+      const areaValue = document.getElementById("area-value");
+      const finishSelect = document.getElementById("finish");
+      const estimateRange = document.getElementById("estimate-range");
+      const estimateWa = document.getElementById("estimate-wa");
+
+      const brl = (n) =>
+        n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+
+      const calc = () => {
+        const service = document.querySelector('input[name="service"]:checked')?.value || "box";
+        const area = Number(areaInput.value);
+        const finish = Number(finishSelect.value);
+        const base = RATES[service] * area * finish;
+        const low = Math.round(base * 0.92);
+        const high = Math.round(base * 1.18);
+
+        areaValue.textContent = `${area.toFixed(1).replace(".", ",")} m²`;
+        estimateRange.textContent = `${brl(low)} – ${brl(high)}`;
+
+        const msg = `Olá! Simulei no site da Lumina:\nServiço: ${LABELS[service]}\nÁrea: ${area.toFixed(1).replace(".", ",")} m²\nAcabamento: ${finishSelect.options[finishSelect.selectedIndex].text}\nFaixa estimada: ${brl(low)} – ${brl(high)}\nQuero confirmar o orçamento com medição.`;
+        estimateWa.href = `https://wa.me/5515997957851?text=${encodeURIComponent(msg)}`;
+      };
+
+      areaInput?.addEventListener("input", calc);
+      finishSelect?.addEventListener("change", calc);
+      document.querySelectorAll('input[name="service"]').forEach((r) => r.addEventListener("change", calc));
+      calc();
+    })();
+  </script>
+</body>
+</html>
